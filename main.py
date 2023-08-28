@@ -1,7 +1,6 @@
 import httpx
 from bs4 import BeautifulSoup
 import json
-import sys
 
 az_animals = list()
 
@@ -10,7 +9,7 @@ def make_request(url):
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
     
-    response = httpx.get(url, headers=headers).text
+    response = httpx.get(url, headers=headers, follow_redirects=True).text
 
     soup = BeautifulSoup(response, "html.parser")
 
@@ -33,7 +32,6 @@ count = 0
 with open("az_animals.json", "r") as fp:
     urls = json.load(fp)
     for url in urls:
-        sys.stdout.write('\033[2K\033[1G')
         result = make_request(url)
         az_animals.append(result)
         count += 1
