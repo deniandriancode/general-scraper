@@ -9,7 +9,7 @@ def make_request(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
     session = requests.Session()
-    response = session.get(url, headers=headers).content
+    response = session.get(url, headers=headers, allow_redirects=False).content
 
     soup = BeautifulSoup(response, "html.parser")
 
@@ -19,7 +19,6 @@ def make_request(url):
     image_url = style_raw.split("url(\"")[1]
     common_name = soup.find("h1").get_text().strip()
     latin_name = soup.find("p", class_="has-text-align-center text-white font-weight-bolder font-size-lg").get_text().strip()
-    print(f"GET {common_name}")
 
     return {
         "image_url": image_url,
