@@ -36,7 +36,7 @@ with open("az_animals.json", "r") as fp:
     for url in urls:
         try:
             result = make_request(url)
-        except httpx.TooManyRedirects:
+        except:
             continue
         az_animals.append(result)
         count += 1
