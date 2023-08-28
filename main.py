@@ -8,7 +8,7 @@ def make_request(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
-    
+
     response = httpx.get(url, headers=headers, follow_redirects=True).text
 
     soup = BeautifulSoup(response, "html.parser")
@@ -32,7 +32,10 @@ count = 0
 with open("az_animals.json", "r") as fp:
     urls = json.load(fp)
     for url in urls:
-        result = make_request(url)
+        try:
+            result = make_request(url)
+        except httpx.TooManyRedirects:
+            continue
         az_animals.append(result)
         count += 1
 
