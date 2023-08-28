@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 import json
 
 az_animals = list()
@@ -34,6 +35,7 @@ with open("az_animals.json", "r") as fp:
         result = make_request(url)
         az_animals.append(result)
         count += 1
+        time.sleep(0.5)
 
 with open("az_animals_result.json", "w") as fp:
     json.dump(az_animals, fp)
