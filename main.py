@@ -13,18 +13,20 @@ def make_request(url):
 
     soup = BeautifulSoup(response, "html.parser")
 
-    if soup.find("div", class_="entry-content") != None:
-        style_raw = soup.find("div", class_="entry-content").find("style").get_text()
-    else:
-        style_raw = soup.find("div", id="title-hero")
+    try:
+        t = soup.find("div", class_="entry-content").find("style").get_text()
+        style_raw = t
+    except:
+        style_raw = soup.find("div", id="title-hero").find("style").get_text()
+        
     style_raw = style_raw.split("background-image: ")[-1].replace("\n", "").replace("\t", "").replace("\");}}", "").strip()
 
     image_url = style_raw.split("url(\"")[1]
     common_name = soup.find("h1").get_text().strip()
 
-    if soup.find("p", class_="has-text-align-center text-white font-weight-bolder font-size-lg") != None:
+    try:
         latin_name = soup.find("p", class_="has-text-align-center text-white font-weight-bolder font-size-lg").get_text().strip()
-    else:
+    except:
         lating_name = "Not provided"
     print(f"GET {common_name}")
 
