@@ -4,13 +4,12 @@ import time
 import json
 
 az_animals = list()
-session = requests.Session()
-session.max_redirects = 3000
 
 def make_request(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
+    session = requests.Session()
     response = session.get(url, headers=headers).content
 
     soup = BeautifulSoup(response, "html.parser")
