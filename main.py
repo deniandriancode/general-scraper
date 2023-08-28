@@ -4,12 +4,14 @@ import time
 import json
 
 az_animals = list()
+session = requests.Session()
+session.max_redirects = 100
 
 def make_request(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
-    response = requests.get(url, headers=headers).content
+    response = session.get(url, headers=headers).content
 
     soup = BeautifulSoup(response, "html.parser")
 
@@ -35,7 +37,7 @@ with open("az_animals.json", "r") as fp:
         result = make_request(url)
         az_animals.append(result)
         count += 1
-        time.sleep(0.5)
+        time.sleep(.25)
 
 with open("az_animals_result.json", "w") as fp:
     json.dump(az_animals, fp)
