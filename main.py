@@ -7,14 +7,10 @@ az_animals = list()
 
 def make_request(url):
     headers = {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", 
-        "Accept-Encoding": "gzip, deflate", 
-        "Accept-Language": "en-US,en", 
-        "Host": "www.a-z-animals.com", 
-        "Upgrade-Insecure-Requests": "1", 
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
     session = requests.Session()
+    session.max_redirects = 1_000_000_000
     response = session.get(url, headers=headers).content
 
     soup = BeautifulSoup(response, "html.parser")
