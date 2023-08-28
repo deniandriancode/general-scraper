@@ -5,7 +5,7 @@ import json
 
 az_animals = list()
 session = requests.Session()
-session.max_redirects = 100
+session.max_redirects = 3000
 
 def make_request(url):
     headers = {
